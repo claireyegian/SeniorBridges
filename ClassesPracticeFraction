@@ -1,0 +1,86 @@
+#Claire Yegian
+#Classes example: fraction
+
+def gcd(a, b):
+    while b != 0:
+        (a,b) = (b, a%b)
+    if a>= 0:
+        return (a)
+    else:
+        return (-a)
+
+class Fraction(object):
+    __slots__ = [ "_numerator", "_denominator"]
+    def __init__(self, num = 0, denom = 1):
+        self._numerator = num
+        self._denominator = denom
+
+    def _simplify(self):
+        """ Simplifies the fraction object. """
+        if self._denominator < 0:
+            self._numerator *= -1
+            self._denominator *= -1
+        f = gcd(self._numerator, self._denominator)
+        self._numerator //= f
+        self._denominator //= f
+
+    def scale(self, constant):
+        """multiplies a fraction by a constant."""
+        top = self._numerator * constant
+        result = Fraction(top, self._denominator)
+        return (result)
+
+    def add(self, other):
+        """Adds two fractions. """
+        assert(isinstance(other, Fraction))
+        top = self._denominator*other._numerator + self._numerator*other._denominator
+        bottom = self._denominator*other._denominator
+        sum = Fraction(top, bottom)
+        sum._simplify()
+        return (sum)
+
+    def sub(self, other):
+        """subtracts other Fraction from self"""
+        other = other.scale(-1)
+        difference = self.add(other)
+        return (difference)
+
+    def mul(self, other):
+        """multiplies two fractions """
+        numerator = self._numerator*other._numerator
+        denominator = self._denominator*other._denominator
+        product = Fraction(numerator, denominator)
+        product._simplify()
+        return (product)
+
+    def div(self, other):
+        """returns self/other"""
+        numerator = self._numerator*other._denominator
+        denominator = self._denominator*other._numerator
+        quotient = Fraction(numerator, denominator)
+        quotient._simplify()
+        return (quotient)
+
+    def __str__(self):
+        """creates a string version of the fraction (to print out the fraction)"""
+        return str(self._numerator) + "/" + str(self._denominator)
+
+    def __repr__(self):
+        """eval-able version of Fraction"""
+        return "Fraction("+str(self._numerator)+","+str(self._denominator)+")"
+
+a = Fraction(8,2)
+b = Fraction(3,9)
+print(a)
+print(b)
+c = a.add(b)
+print(c)
+c = c.scale(4)
+print(c)
+print(c.sub(a))
+d = a.mul(b)
+print(d)
+e = a.div(b)
+print(e)
+print(repr(e))
+print(eval(repr(a)))
