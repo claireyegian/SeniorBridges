@@ -1,0 +1,30 @@
+#Claire Yegian
+#Classes example: rectangle
+
+class Rectangle(object):
+    __slots__ = ["_base", "_width"]
+    def __init__(self, base = 1, width = 1):
+        self._base = base
+        self._width = width
+
+    def area(self):
+        area = self._base*self._width
+        return (area)
+
+    def per(self):
+        perimeter = 2*self._base + 2*self._width
+        return (perimeter)
+
+    def vol(self, height):
+        volume = self._base*self._width*height
+        return (volume)
+
+    def __str__(self):
+        return (str(self._base) + "," + str(self._width))
+
+a = Rectangle(4,5)
+print(a)
+print(a.area())
+print(a.per())
+print(a.vol(2))
+
